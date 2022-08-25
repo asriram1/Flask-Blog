@@ -1,0 +1,9 @@
+#Ignore environment variables directory
+venv/
+
+#Ignore config file
+blog_server/config.py
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
