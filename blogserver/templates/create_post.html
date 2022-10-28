@@ -27,6 +27,12 @@
         {%else%} {{form.content(class="form-control form-control-lg")}} {% endif
         %}
       </div>
+      <div class="form-group">
+        {{form.documents.label(class="form-control-label")}}
+        {{form.documents(class_="form-control selectpicker",
+        placeholder=form.documents.description, title="Select documents to
+        attach", show_tick=true)}}
+      </div>
     </fieldset>
     <div class="form-group mt-4">
       {{form.submit(class="btn btn-outline-info")}}

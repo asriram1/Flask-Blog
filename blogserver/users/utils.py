@@ -7,6 +7,7 @@ from urllib.parse import urlparse, urljoin
 from flask_mail import Message
 
 def save_picture(form_picture):
+    """function to save user profile picture"""
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex+f_ext
@@ -19,8 +20,41 @@ def save_picture(form_picture):
     
     return picture_fn
 
+def save_document(form_document):
+    """function to save a user document to db"""
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_document.filename)
+    document_fn = random_hex+f_ext
+    document_path = os.path.join(current_app.root_path, 'static/documents',document_fn)
+
+    form_document.save(document_path)
+
+    # output_size = (125,125)
+    # i = Image.open(form_picture)
+    # i.thumbnail(output_size)
+    # i.save(picture_path)
+    
+    return document_fn
+
+def save_uploaded_docs(form_document):
+    """function to save a save all user documents"""
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_document.filename)
+    document_fn = form_document.filename
+    document_path = os.path.join(current_app.root_path, 'static/uploaded_docs',document_fn)
+
+    form_document.save(document_path)
+
+    # output_size = (125,125)
+    # i = Image.open(form_picture)
+    # i.thumbnail(output_size)
+    # i.save(picture_path)
+    
+    return {'document_fn': document_fn, 'document_path': document_path}
+
 
 def send_reset_email(user):
+    """function to reset email"""
     token = user.get_reset_token()
     msg = Message('Password Reset Request', 
                 sender='noreply@demo.com', 

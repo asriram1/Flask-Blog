@@ -1,0 +1,252 @@
+{%extends "layout.html"%} {%block content%}
+<div class="content-section">
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{form.hidden_tag()}}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">My Documents</legend>
+      <div class="form-group w-25">
+        {{form.document_name.label(class="form-control-label")}} {% if
+        form.document_name.errors %} {{form.document_name(class="form-control
+        form-control-lg is-invalid ")}}
+        <div class="invalid-feedback">
+          {% for error in form.document_name.errors%}
+          <span>{{error}}</span>
+          {%endfor%}
+        </div>
+        {%else%} {{form.document_name(class="form-control form-control-lg ")}} {%
+        endif %}
+      </div>
+      <div class="form-group">
+        {{form.document_description.label(class="form-control-label")}} {% if
+        form.document_description.errors %} {{form.document_description(class="form-control
+        form-control-lg is-invalid ")}}
+        <div class="invalid-feedback">
+          {% for error in form.document_description.errors%}
+          <span>{{error}}</span>
+          {%endfor%}
+        </div>
+        {%else%} {{form.document_description( cols="35", rows="5", class="form-control form-control-lg ")}} {%
+        endif %}
+    </textarea>
+      </div>
+      <div class="form-group w-25 mb-4">
+        {{form.document_read_time.label(class="form-control-label")}} {% if
+        form.document_read_time.errors %} {{form.document_read_time(class="form-control
+        form-control-sm is-invalid ")}}
+        <div class="invalid-feedback">
+          {% for error in form.document_read_time.errors%}
+          <span>{{error}}</span>
+          {%endfor%}
+        </div>
+        {%else%} {{form.document_read_time(class="form-control form-control-sm ")}} {%
+        endif %}
+      </div>
+    </fieldset>
+    <div class="form-group">
+        {{form.document.label()}} 
+        {{form.document(class="form-control-file")}}
+        {% if form.document.errors %}
+            {% for error in form.document.errors%}
+            <span class = "text-danger">{{error}}</span></br>
+            {%endfor%}
+        {% endif %}
+    </div>
+    <div class="form-group mt-4">
+      {{form.submit(class="btn btn-outline-info")}}
+    </div>
+  </form>
+  <div class="album py-5 bg-light">
+    <div class = "container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for item in public_urls %}
+            <div class = "col d-flex align-items-stretch">
+                <div class="card shadow-sm">
+                  <embed src={{item['presigned_url']}} width="100%" height="225" 
+                  type="application/pdf">
+                    <!-- <object data=
+                    "{{documents}}"
+                                    width="100%" 
+                                    height="225"> 
+                            </object> -->
+                    <!-- <embed class="bd-placeholder-img card-img-top" src="{{documents}}" width="100%" height="225"> -->
+                    <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+                    <div class="card-body d-flex flex-column" >
+                        <h5 class="card-title">{{item['name']}}</h5>
+                        <p class="card-text mb-4">{{item['description']}}</p>
+                          <div class="btn-group mt-auto align-self-start mb-2">
+                            <a href="{{item['presigned_url']}}" target="_blank"> <button type="button" class="btn btn-sm btn-primary">View</button></a>
+                            <button type="button" class="ms-1 btn btn-sm btn-danger">Delete</button>
+                          </div>
+                          <small class="text-muted">{{item['read_time']}} mins</small>
+                      </div>
+                </div>
+            </div>
+          {% endfor %}
+          
+            <!-- <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm">
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      
+                  <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">9 mins</small>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+        </div>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+      <div class="input-group">
+        <input type="text" id = "myInput"  value ='{{copy_link}}' class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <input id = "button-addon2" class = "btn btn-primary" onclick="copyFunction()" value = "Copy Your Public Link">
+        <!-- <button onclick = "copyFunction()" class="btn btn-primary" type="button" id="button-addon2">Copy Your Public Link</button> -->
+      </div>
+      <!-- <button onclick = "copyFunction()" class="btn btn-primary" type="button">Copy Your Public Link</button> -->
+      <button onclick="location.href='{{shareable_link}}'" class="btn btn-primary" type="button">View Your Public Profile</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyFunction() {
+    // Get the text field
+    var copyText = document.getElementById("myInput");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+    changeButtonText()
+
+    // Alert the copied text
+    // alert("Copied your link! ");
+  }
+  function changeButtonText(){
+    var btnTxt = document.getElementById('button-addon2');
+    if (btnTxt.value == "Copy Your Public Link"){
+         btnTxt.value = "Copied!";
+         setTimeout(() => (document.getElementById("button-addon2").value  = "Copy Your Public Link"), 5000);
+      }
+  }
+
+</script>
+{%endblock%}

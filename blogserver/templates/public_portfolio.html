@@ -1,0 +1,42 @@
+{%extends "layout.html"%} {%block content%}
+<div class="content-section">
+  <legend class="border-bottom mb-4">{{title}}</legend>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for document in documents %}
+        <div class="col d-flex align-items-stretch">
+          <div class="card shadow-sm">
+            <embed
+              src="{{document.presigned_url}}"
+              width="100%"
+              height="225"
+              type="application/pdf"
+            />
+            <!-- <object data=
+                    "{{documents}}"
+                                    width="100%" 
+                                    height="225"> 
+                            </object> -->
+            <!-- <embed class="bd-placeholder-img card-img-top" src="{{documents}}" width="100%" height="225"> -->
+            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{document.name}}</h5>
+              <p class="card-text mb-4">{{document.description}}</p>
+              <div class="btn-group mt-auto align-self-start mb-2">
+                <a href="{{document.presigned_url}}" target="_blank">
+                  <button type="button" class="btn btn-sm btn-primary">
+                    View
+                  </button></a
+                >
+              </div>
+              <small class="text-muted">{{document.read_time}} mins</small>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

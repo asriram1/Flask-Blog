@@ -11,6 +11,10 @@ aws_config = Config()
 dynamo_db= boto3.resource('dynamodb',
                         aws_access_key_id = aws_config.AWS_ACCESS_KEY_ID,
                         aws_secret_access_key = aws_config.AWS_SECRET_KEY)
+
+s3 = boto3.client('s3',
+                        aws_access_key_id = aws_config.AWS_ACCESS_KEY_ID,
+                        aws_secret_access_key = aws_config.AWS_SECRET_KEY)
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
@@ -20,6 +24,7 @@ login_manager.login_message_category = 'info'
 mail = Mail()
 
 def create_app(config_class=Config):
+    """Initializing the app"""
     app = Flask(__name__)
     app.config.from_object(Config)
     db.init_app(app)
